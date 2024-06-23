@@ -1,7 +1,9 @@
 "use server";
 import { redirect } from "next/navigation";
-import { storePost } from "@/lib/posts";
+import { storePost, updatePostLikeStatus } from "@/lib/posts";
 import { uploadImage } from "@/lib/firebase-storage";
+import { revalidatePath } from "next/cache";
+
 // START CREATE POST
 export const createPost = async (prevState, formData) => {
   const title = formData.get("title");
@@ -43,3 +45,8 @@ export const createPost = async (prevState, formData) => {
   redirect("/feed");
 };
 // END CREATE POST
+
+export async function togglePostLikeStatus(postId) {
+  updatePostLikeStatus(postId, 2);
+  revalidatePath("/feed");
+}
