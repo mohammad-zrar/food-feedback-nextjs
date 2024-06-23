@@ -24,9 +24,17 @@ export const createPost = async (prevState, formData) => {
   if (errors.length > 0) {
     return { errors };
   }
-  const imageUrl = await uploadImage(image);
+  let imageUrl;
+  try {
+    imageUrl = await uploadImage(image);
+  } catch (error) {
+    throw new Error(
+      "Image upload failed, post was not created try again later."
+    );
+  }
+
   storePost({
-    imageUrl: imageUrl,
+    imageUrl,
     title,
     content,
     userId: 1,
