@@ -5,11 +5,23 @@ import { formatDate } from "@/lib/format";
 import LikeButton from "./like-icon";
 import { togglePostLikeStatus } from "@/actions/posts";
 
+function imageLoader(config) {
+  // const [urlStart, urlEnd] = config.src.split("?");
+  return config.src;
+}
+
 function Post({ post, action }) {
   return (
     <article className="post">
       <div className="post-image">
-        <Image src={post.image} fill alt={post.title} />
+        <Image
+          // loader={imageLoader}
+          width={100}
+          height={100}
+          src={post.image}
+          alt={post.title}
+          quality={50}
+        />
       </div>
       <div className="post-content">
         <header>
